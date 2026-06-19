@@ -5,10 +5,15 @@ import { ServiceCard } from "@/components/ServiceCard";
 import { CTABand } from "@/components/CTABand";
 
 export const metadata: Metadata = {
-  title: "Window Film Services in Mumbai",
+  title: "Window Film Services in Mumbai | Elegant Glass Films",
   description:
-    "Sun control, frosted, safety, one-way privacy, car tint, and glass & mirror work across Mumbai. Fitted by Elegant Glass Films, Andheri West.",
+    "Sun control, frosted glass, one-way privacy, safety, UV protection, decorative, office branding, residential, and car window tinting across Mumbai. Fitted by Elegant Glass Films, Andheri West.",
   alternates: { canonical: "/services" },
+  openGraph: {
+    title: "Glass Film Services in Mumbai — Elegant Glass Films",
+    description:
+      "Professional window film installation across Mumbai homes, offices, and commercial buildings. Sun control, privacy, safety, UV protection, and more.",
+  },
 };
 
 export default function ServicesPage() {
@@ -17,11 +22,12 @@ export default function ServicesPage() {
       <Section className="pt-14 sm:pt-20">
         <Eyebrow>Services</Eyebrow>
         <h1 className="mt-4 max-w-2xl font-display text-4xl font-semibold leading-tight sm:text-5xl">
-          Every film, fitted to the pane it protects
+          Every film type, professionally fitted across Mumbai
         </h1>
         <p className="mt-5 max-w-xl text-lg text-slate-muted">
-          From heat and glare to privacy and safety, here is the full range we supply and
-          install across Mumbai.
+          From cutting afternoon heat and blocking UV to creating private office cabins
+          and securing shopfront glass — here is the complete range we supply and
+          install for homes, offices, and commercial buildings across Mumbai.
         </p>
       </Section>
 

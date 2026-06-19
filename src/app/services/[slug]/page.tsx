@@ -21,10 +21,14 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const s = getService(params.slug);
   if (!s) return {};
   return {
-    title: `${s.name} in Mumbai`,
+    title: `${s.name} in Mumbai | ${site.name}`,
     description: s.intro.slice(0, 155),
     alternates: { canonical: `/services/${s.slug}` },
-    openGraph: { title: `${s.name} in Mumbai · ${site.name}`, description: s.short },
+    keywords: [s.keyword, `${s.name} Mumbai`, "glass film installation Mumbai", "window film Mumbai"],
+    openGraph: {
+      title: `${s.name} in Mumbai — ${site.name}`,
+      description: s.short,
+    },
   };
 }
 
@@ -32,25 +36,10 @@ export default function ServiceDetail({ params }: { params: { slug: string } }) 
   const s = getService(params.slug);
   if (!s) notFound();
 
-  const faqs = [
-    {
-      q: `How much does ${s.name.toLowerCase()} cost in Mumbai?`,
-      a: `Pricing depends on the glass area and film grade. We give a clear per-square-foot quote after a free site measurement — call ${site.phone.display}.`,
-    },
-    {
-      q: "How long does installation take?",
-      a: "Most residential jobs are completed within a day. Larger offices and facades are scheduled to suit you, with minimal disruption.",
-    },
-    {
-      q: "Do you offer a warranty?",
-      a: "Yes. Films are fitted by trained installers and backed by a workmanship and material warranty. Exact terms depend on the film selected.",
-    },
-  ];
-
   return (
     <>
       <JsonLd data={serviceSchema(s)} />
-      <JsonLd data={faqSchema(faqs)} />
+      <JsonLd data={faqSchema(s.faqs)} />
       <JsonLd
         data={breadcrumbSchema([
           { name: "Home", url: site.url },
@@ -76,6 +65,10 @@ export default function ServiceDetail({ params }: { params: { slug: string } }) 
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-slate-muted">{s.intro}</p>
 
+            {s.detail && (
+              <p className="mt-4 text-[15px] leading-relaxed text-slate-muted">{s.detail}</p>
+            )}
+
             <h2 className="mt-10 font-display text-xl font-semibold">Why people choose it</h2>
             <ul className="mt-4 grid gap-3 sm:grid-cols-2">
               {s.benefits.map((b) => (
@@ -97,6 +90,22 @@ export default function ServiceDetail({ params }: { params: { slug: string } }) 
                 </span>
               ))}
             </div>
+
+            {s.process && s.process.length > 0 && (
+              <>
+                <h2 className="mt-10 font-display text-xl font-semibold">How installation works</h2>
+                <ol className="mt-4 space-y-3">
+                  {s.process.map((step, i) => (
+                    <li key={step} className="flex gap-3 text-[15px] text-ink/85">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-glass/10 font-mono text-[11px] font-medium text-glass-deep">
+                        {i + 1}
+                      </span>
+                      {step}
+                    </li>
+                  ))}
+                </ol>
+              </>
+            )}
           </div>
 
           <aside className="lg:pt-12">
@@ -117,6 +126,27 @@ export default function ServiceDetail({ params }: { params: { slug: string } }) 
               >
                 Ask on WhatsApp
               </a>
+
+              {(s.lifespan || s.maintenance) && (
+                <div className="mt-5 border-t border-frost-deep pt-5 space-y-3">
+                  {s.lifespan && (
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-eyebrow text-slate-muted">
+                        Expected lifespan
+                      </p>
+                      <p className="mt-1 text-sm text-ink/85">{s.lifespan}</p>
+                    </div>
+                  )}
+                  {s.maintenance && (
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-eyebrow text-slate-muted">
+                        Maintenance
+                      </p>
+                      <p className="mt-1 text-sm text-ink/85">{s.maintenance}</p>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </aside>
         </div>
@@ -126,7 +156,7 @@ export default function ServiceDetail({ params }: { params: { slug: string } }) 
       <Section className="mt-20">
         <h2 className="font-display text-2xl font-semibold sm:text-3xl">Common questions</h2>
         <div className="mt-8 divide-y divide-frost-deep border-y border-frost-deep">
-          {faqs.map((f) => (
+          {s.faqs.map((f) => (
             <details key={f.q} className="group py-5">
               <summary className="cursor-pointer list-none font-medium text-ink marker:hidden">
                 <span className="flex items-center justify-between gap-4">
