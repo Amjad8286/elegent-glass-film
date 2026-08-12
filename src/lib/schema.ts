@@ -1,4 +1,4 @@
-import { site, services, type Service } from "./site";
+import { site, services, type Service, type Area } from "./site";
 
 // LocalBusiness JSON-LD — connects the site to your Google profile.
 // NAP here MUST match the Google Business Profile exactly.
@@ -39,7 +39,19 @@ export function localBusinessSchema() {
       reviewCount: site.rating.count,
     },
     sameAs: [site.social.google, site.social.instagram, site.social.facebook],
-    areaServed: "Mumbai, Maharashtra",
+    // Kept at region level deliberately. This schema is injected on every page
+    // via the root layout, so enumerating all ~70 localities here would repeat
+    // them site-wide. The specific localities are declared once each, on their
+    // own area page via areaServiceSchema, and listed on /areas.
+    areaServed: [
+      { "@type": "City", name: "Mumbai" },
+      { "@type": "City", name: "Thane" },
+      { "@type": "City", name: "Navi Mumbai" },
+      {
+        "@type": "AdministrativeArea",
+        name: "Mumbai Metropolitan Region, Maharashtra",
+      },
+    ],
     makesOffer: services.map((s) => ({
       "@type": "Offer",
       itemOffered: { "@type": "Service", name: s.name },
@@ -57,6 +69,45 @@ export function serviceSchema(s: Service) {
     provider: { "@id": `${site.url}/#business` },
     areaServed: "Mumbai, Maharashtra",
     url: `${site.url}/services/${s.slug}`,
+  };
+}
+
+/**
+ * Service schema scoped to one locality. This is what tells search engines the
+ * area page is a real service offering in that place rather than a duplicate of
+ * the parent service page.
+ */
+export function areaServiceSchema(a: Area) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: `Window Film & Glass Services in ${a.name}`,
+    description: a.blurb,
+    provider: { "@id": `${site.url}/#business` },
+    url: `${site.url}/areas/${a.slug}`,
+    areaServed: [a.name, ...(a.covers ?? [])].map((name) => ({
+      "@type": "City",
+      name,
+      containedInPlace: {
+        "@type": "AdministrativeArea",
+        name: "Mumbai Metropolitan Region, Maharashtra",
+      },
+    })),
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: `Films fitted in ${a.name}`,
+      itemListElement: a.topServices
+        .map((slug) => services.find((s) => s.slug === slug))
+        .filter((s): s is Service => Boolean(s))
+        .map((s) => ({
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: s.name,
+            url: `${site.url}/services/${s.slug}`,
+          },
+        })),
+    },
   };
 }
 

@@ -802,20 +802,35 @@ export const services: Service[] = [
   },
 ];
 
-export type Area = {
-  slug: string;
-  name: string;
-  blurb: string;
-};
+// Location pages capture "near me" and area-specific searches. The data lives
+// in ./areas.ts (it is long enough to warrant its own file) and is re-exported
+// here so site.ts stays the single import point for site content.
+export {
+  areas,
+  areasByRegion,
+  getArea,
+  servedLocalities,
+  AREA_REGIONS,
+  type Area,
+  type AreaRegion,
+} from "./areas";
 
-// Location pages capture "near me" and area-specific searches.
-export const areas: Area[] = [
-  { slug: "andheri-west", name: "Andheri West", blurb: "Our home base — same-day site visits across Andheri West and Lokhandwala." },
-  { slug: "andheri-east", name: "Andheri East", blurb: "Office and residential glass film across Andheri East, Marol, and SEEPZ." },
-  { slug: "bandra", name: "Bandra", blurb: "Privacy and sun control film for Bandra homes, studios, and storefronts." },
-  { slug: "juhu", name: "Juhu", blurb: "Sea-facing flats get the most from heat-rejecting and salt-resistant film." },
-  { slug: "powai", name: "Powai", blurb: "High-rise and office film for Powai and Hiranandani towers." },
-  { slug: "goregaon", name: "Goregaon", blurb: "Residential and commercial film across Goregaon and the film city belt." },
+/** Areas surfaced in the footer and on the home page — the full list is too
+ *  long to render everywhere, so these are the highest-intent ones. The rest
+ *  are reachable from /areas. */
+export const featuredAreaSlugs = [
+  "andheri-west",
+  "andheri-east",
+  "bandra-west",
+  "juhu",
+  "powai",
+  "goregaon-east",
+  "malad-west",
+  "borivali-west",
+  "worli",
+  "lower-parel-west",
+  "thane-west",
+  "navi-mumbai",
 ];
 
 export const reviews = [

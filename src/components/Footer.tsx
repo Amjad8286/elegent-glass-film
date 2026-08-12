@@ -1,5 +1,11 @@
 import Link from "next/link";
-import { site, services, areas } from "@/lib/site";
+import { site, services, areas, featuredAreaSlugs } from "@/lib/site";
+
+// The full area list is far too long for a footer — link the highest-intent
+// ones and send the rest through /areas.
+const footerAreas = featuredAreaSlugs
+  .map((slug) => areas.find((a) => a.slug === slug))
+  .filter((a): a is NonNullable<typeof a> => Boolean(a));
 
 export function Footer() {
   return (
@@ -33,13 +39,18 @@ export function Footer() {
         <div>
           <p className="eyebrow text-glass">Areas we serve</p>
           <ul className="mt-4 space-y-2 text-sm">
-            {areas.map((a) => (
+            {footerAreas.map((a) => (
               <li key={a.slug}>
                 <Link href={`/areas/${a.slug}`} className="text-slate-mute2 hover:text-frost">
                   {a.name}
                 </Link>
               </li>
             ))}
+            <li>
+              <Link href="/areas" className="text-frost hover:text-glass">
+                All {areas.length} areas →
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

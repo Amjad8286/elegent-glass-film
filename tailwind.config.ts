@@ -48,10 +48,30 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(16px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        "zoom-in": {
+          "0%": { opacity: "0", transform: "scale(0.97)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        "slide-from-right": {
+          "0%": { opacity: "0", transform: "translateX(28px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        "slide-from-left": {
+          "0%": { opacity: "0", transform: "translateX(-28px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
       },
       animation: {
         sheen: "sheen 5.5s ease-in-out infinite",
         rise: "rise 0.7s ease-out both",
+        "fade-in": "fade-in 0.2s ease-out both",
+        "zoom-in": "zoom-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "slide-from-right": "slide-from-right 0.28s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "slide-from-left": "slide-from-left 0.28s cubic-bezier(0.16, 1, 0.3, 1) both",
       },
     },
   },

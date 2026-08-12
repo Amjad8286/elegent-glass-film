@@ -3,7 +3,15 @@ import { site, services, areas } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const staticRoutes = ["", "/services", "/gallery", "/reviews", "/about", "/contact"];
+  const staticRoutes = [
+    "",
+    "/services",
+    "/areas",
+    "/gallery",
+    "/reviews",
+    "/about",
+    "/contact",
+  ];
 
   const pages = staticRoutes.map((path) => ({
     url: `${site.url}${path}`,
@@ -19,11 +27,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  // Hub pages (Mumbai, Navi Mumbai) outrank individual localities.
   const areaPages = areas.map((a) => ({
     url: `${site.url}/areas/${a.slug}`,
     lastModified: now,
     changeFrequency: "monthly" as const,
-    priority: 0.6,
+    priority: a.isHub ? 0.7 : 0.6,
   }));
 
   return [...pages, ...servicePages, ...areaPages];

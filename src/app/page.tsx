@@ -1,10 +1,15 @@
 import Link from "next/link";
-import { site, services, reviews, areas } from "@/lib/site";
+import { site, services, reviews, areas, featuredAreaSlugs } from "@/lib/site";
 import { Section, Eyebrow } from "@/components/Section";
 import { SpecReadout } from "@/components/SpecReadout";
 import { ServiceCard } from "@/components/ServiceCard";
 import { ReviewCard } from "@/components/ReviewCard";
 import { CTABand } from "@/components/CTABand";
+
+// A representative spread rather than the whole list — /areas holds the rest.
+const homeAreas = featuredAreaSlugs
+  .map((slug) => areas.find((a) => a.slug === slug))
+  .filter((a): a is NonNullable<typeof a> => Boolean(a));
 
 export default function Home() {
   return (
@@ -130,10 +135,14 @@ export default function Home() {
       <Section className="mt-24">
         <Eyebrow>Where we work</Eyebrow>
         <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">
-          Serving Andheri & western Mumbai
+          Serving Mumbai, Thane &amp; Navi Mumbai
         </h2>
+        <p className="mt-4 max-w-xl text-slate-muted">
+          Based in Andheri West, covering {areas.length} localities from Colaba
+          to Borivali and out across the eastern suburbs.
+        </p>
         <div className="mt-8 flex flex-wrap gap-3">
-          {areas.map((a) => (
+          {homeAreas.map((a) => (
             <Link
               key={a.slug}
               href={`/areas/${a.slug}`}
@@ -142,6 +151,12 @@ export default function Home() {
               {a.name}
             </Link>
           ))}
+          <Link
+            href="/areas"
+            className="rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-frost transition-colors hover:bg-glass-deep"
+          >
+            All areas →
+          </Link>
         </div>
       </Section>
 

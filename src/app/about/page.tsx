@@ -4,7 +4,8 @@ import { Section, Eyebrow } from "@/components/Section";
 import { CTABand } from "@/components/CTABand";
 
 export const metadata: Metadata = {
-  title: "About Elegant Glass Films",
+  // Brand omitted — the root layout's title template appends it.
+  title: "About Us — Window Film Fitters in Andheri West",
   description:
     "Elegant Glass Films is a window film and glass shop in Andheri West, Mumbai, rated 5.0 across 24 Google reviews.",
   alternates: { canonical: "/about" },

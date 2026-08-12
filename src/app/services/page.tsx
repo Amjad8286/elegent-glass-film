@@ -5,7 +5,8 @@ import { ServiceCard } from "@/components/ServiceCard";
 import { CTABand } from "@/components/CTABand";
 
 export const metadata: Metadata = {
-  title: "Window Film Services in Mumbai | Elegant Glass Films",
+  // Brand omitted — the root layout's title template appends it.
+  title: "Window Film Services in Mumbai",
   description:
     "Sun control, frosted glass, one-way privacy, safety, UV protection, decorative, office branding, residential, and car window tinting across Mumbai. Fitted by Elegant Glass Films, Andheri West.",
   alternates: { canonical: "/services" },

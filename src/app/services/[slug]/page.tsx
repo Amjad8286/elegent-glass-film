@@ -21,7 +21,8 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   const s = getService(params.slug);
   if (!s) return {};
   return {
-    title: `${s.name} in Mumbai | ${site.name}`,
+    // Brand omitted — the root layout's title template appends it.
+    title: `${s.name} in Mumbai`,
     description: s.intro.slice(0, 155),
     alternates: { canonical: `/services/${s.slug}` },
     keywords: [s.keyword, `${s.name} Mumbai`, "glass film installation Mumbai", "window film Mumbai"],
