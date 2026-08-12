@@ -16,7 +16,7 @@ export const site = {
     tel: "+919326625391",
     whatsapp: "919326625391",
   },
-  email: "hello@elegantglassfilms.com",
+  email: "elegantglassfilms@gmail.com",
 
   address: {
     street: "United Co-op Society, 002, Bldg 3a, Vitthalbhai Patel Rd",
