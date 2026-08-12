@@ -7,7 +7,7 @@ export const site = {
   tagline: "Window films that command light, heat, and privacy.",
   category: "Glass & mirror shop",
   // Update this to your real domain before deploying.
-  url: "https://www.elegantglassfilms.in",
+  url: "https://elegantglassfilms.com",
   rating: { value: "5.0", count: 24 },
   founded: 2014,
 
@@ -16,7 +16,7 @@ export const site = {
     tel: "+919326625391",
     whatsapp: "919326625391",
   },
-  email: "hello@elegantglassfilms.in",
+  email: "hello@elegantglassfilms.com",
 
   address: {
     street: "United Co-op Society, 002, Bldg 3a, Vitthalbhai Patel Rd",
